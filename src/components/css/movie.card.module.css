@@ -1,0 +1,45 @@
+#cardContainer {
+    height: 220px;
+    width: 250px;
+    background-color: #545353;
+    overflow: hidden;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    color: lightgrey;
+}
+
+#poster {
+    height: 150px;
+    width: 250px;
+    margin: auto;
+    text-align: center;
+}
+
+#detailsContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#details {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#title {
+    font-size: 0.9rem;
+    margin: 0;
+    font-weight: 600;
+    width: 70%;
+}
+
+#duration {
+    font-size: 1rem;
+    margin: 0;
+}
+
+#btn {
+    margin-top: 8px;
+}

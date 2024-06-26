@@ -1,0 +1,10 @@
+#container {
+    overflow: scroll;
+    width: 95%;
+    margin: auto;
+}
+
+#heading {
+    color: lightgrey;
+    text-align: center;
+}

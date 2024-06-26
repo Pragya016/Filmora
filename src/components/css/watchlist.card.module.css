@@ -1,0 +1,60 @@
+#cardContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    overflow: hidden;
+    height: 250px;
+    width: 95%;
+    padding: 10px;
+    border-bottom: 1px solid lightgrey;
+}
+
+#poster {
+    height: 100%;
+    width: 25%;
+    box-shadow: 0 0 3px lightgrey;
+    box-sizing: border-box;
+}
+
+#detailsContainer {
+    width: 75%;
+    height: 100%;
+    box-sizing: border-box;
+    padding-left: 10px;
+}
+
+#topContainer{
+    display: flex;
+    justify-content: space-between ;
+    box-sizing: border-box;
+}
+
+#editIcon{
+    font-size: 1.2rem;
+    height: fit-content;
+    padding:0 ;
+}
+
+#title, #genre, #released {
+    margin: 0 0 5px 0;
+}
+
+#title {
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+#genre {
+    font-weight: 500;
+    color: orange;
+    font-size: 1rem;
+}
+
+#released {
+    font-size: 0.9rem;
+}
+
+#desc {
+    color: grey;
+    text-align: justify;
+}

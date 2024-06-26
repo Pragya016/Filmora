@@ -1,0 +1,49 @@
+import React, { useContext } from 'react';
+import { styled, alpha } from '@mui/material/styles';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import InputBase from '@mui/material/InputBase';
+import Badge from '@mui/material/Badge';
+import BookmarksIcon from '@mui/icons-material/Bookmarks';
+import { useSelector } from 'react-redux';
+import { watchlistContext } from '../App';
+import AddMovieForm from './AddMovieForm';
+import styles from './css/navbar.module.css'
+
+export default function Navbar() {
+  const watchlistItems = useSelector(state => state.movies);
+  const { setShowWatchlist } = useContext(watchlistContext);
+
+  function handleDisplayWatchlist() {
+    setShowWatchlist(prevState => !prevState);
+  }
+
+  return (
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar position="static" id={styles.nav}>
+        <Toolbar>
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{ display: { xs: 'none', sm: 'block' } }}
+          >
+            Filmora
+          </Typography>
+          <Box sx={{ flexGrow: 1 }} />
+          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+            <AddMovieForm />
+            <IconButton size="large" aria-label="show 4 new mails" color="inherit" onClick={handleDisplayWatchlist}>
+              <Badge badgeContent={watchlistItems.length} color="error">
+                <BookmarksIcon />
+              </Badge>
+            </IconButton>
+          </Box>
+        </Toolbar>
+      </AppBar>
+    </Box>
+  );
+}

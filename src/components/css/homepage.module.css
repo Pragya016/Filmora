@@ -1,5 +1,5 @@
 #container {
-    overflow: scroll;
+    overflow: hidden;
     width: 95%;
     height: 90vh;
     margin: auto;
@@ -7,4 +7,5 @@
 
 #heading {
     text-align: center;
+    color : darkslategray ;
 }

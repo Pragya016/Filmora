@@ -120,11 +120,11 @@ export const toggleMarkAsWatched = createAsyncThunk(
                 const movieData = docSnapshot.data();
                 const updatedData = {
                     ...movieData,
-                    isWatched: !movieData.isWatched || false, // Toggle if exists or set to false if not
+                    isWatched: !movieData.isWatched || false, 
                 };
 
                 await setDoc(docRef, updatedData, { merge: true });
-                return { id, updatedData }; // Return the id and updated data
+                return { id, updatedData }; 
             } else {
                 console.log('Document does not exist');
             }

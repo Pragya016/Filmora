@@ -2,28 +2,32 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 import LibraryAddCheckIcon from '@mui/icons-material/LibraryAddCheck';
-import { addToWatchlist } from '../store/firebase.services';
-import styles from './css/movie.details.module.css';
+import { addToWatchlist, toggleMarkAsWatched } from '../store/firebase.services';
+import CheckIcon from '@mui/icons-material/Check';
 import { Button } from '@mui/material';
+import styles from './css/movie.details.module.css';
 
 export default function MovieDetails(props) {
   const [movieDetails, setMovieDetails] = useState({});
   const [isInWatchlist, setIsInWatchlist] = useState(false);
+  const [watchedMovie, setWatchedMovie] = useState({ watched: false, id: null });
   const dispatch = useDispatch();
   const watchlist = useSelector(state => state.movies || []);
 
   useEffect(() => {
     const fetchData = async () => {
-      const url = `http://www.omdbapi.com/?apikey=480fd1e0&t=${props.movie}`;
+      const url = `https://www.omdbapi.com/?apikey=480fd1e0&t=${props.movie}`;
 
       try {
         const response = await fetch(url);
         const result = await response.json();
         setMovieDetails(result);
 
-        // Check if the movie is in the watchlist
-        const movieInWatchlist = watchlist.some(item => item.imdbID === result.imdbID);
-        setIsInWatchlist(movieInWatchlist);
+        // Check if the movie is in the watchlist and get its ID
+        const movieInWatchlist = watchlist.find(item => item.imdbID === result.imdbID);
+        const movieId = movieInWatchlist ? movieInWatchlist.id : null;
+        setIsInWatchlist(!!movieInWatchlist);
+        setWatchedMovie({ watched: !!movieInWatchlist, id: movieId });
       } catch (error) {
         console.error(error);
       }
@@ -31,6 +35,7 @@ export default function MovieDetails(props) {
     fetchData();
   }, [props.movie, watchlist]);
 
+  // -------------------------------
   function handleAddToWatchlist() {
     if (isInWatchlist) return;
     const movieObj = { ...movieDetails, inWatchlist: true };
@@ -39,6 +44,13 @@ export default function MovieDetails(props) {
     dispatch(addToWatchlist(movieObj));
     setIsInWatchlist(true);
   }
+
+  // ---------------------------------
+  // function handleMarkedAsWatched() {
+  //   dispatch(toggleMarkAsWatched(watchedMovie.id));
+  //   setWatchedMovie(prevState => ({watched : !prevState, id : prevState}))
+  //   console.log(watchedMovie.watched)
+  // }
 
   return (
     <div id={styles.container}>
@@ -50,16 +62,21 @@ export default function MovieDetails(props) {
       <p id={styles.director}><span className={styles.headings}>Director</span> : {movieDetails.Director}</p>
       <p id={styles.language}><span className={styles.headings}>Language</span> : {movieDetails.Language}</p>
       <p id={styles.plot}>{movieDetails.Plot}</p>
-      <Button className={styles.btn} variant='outlined' color='primary' style={{ marginLeft: '5px' }} onClick={() => props.onClose()}>Close</Button>
-      {isInWatchlist ? (
-        <Button id={styles.addedBtn} className={styles.btn} variant='contained' color='warning'>
-          <LibraryAddCheckIcon style={{ marginRight: '5px' }} />Added
-        </Button>
-      ) : (
-        <Button className={styles.btn} variant='outlined' color='warning' onClick={handleAddToWatchlist}>
-          <BookmarkAddIcon /> Add to watchlist
-        </Button>
-      )}
+      <div id={styles.btnContainer}>
+        <div>
+          {isInWatchlist ? (
+            <Button variant='contained' color='warning' style={{ marginRight: '5px' }}>
+              <LibraryAddCheckIcon style={{ marginRight: '5px' }} />Added
+            </Button>
+          ) : (
+            <Button variant='outlined' color='warning' onClick={handleAddToWatchlist} style={{ marginRight: '5px' }}>
+              <BookmarkAddIcon /> Add to watchlist
+            </Button>
+          )}
+            <Button variant='contained' color='primary'><CheckIcon style={{ marginRight: "5px" }} />Watched</Button> :
+        </div>
+        <Button variant='outlined' color='primary' onClick={() => props.onClose()}>Close</Button>
+      </div>
     </div>
   );
 }

@@ -41,7 +41,7 @@ export default function WatchlistCard(props) {
           <p id={styles.text}>{Plot}</p>
         </div>
         <div id={styles.bottomContainer}>
-          <Button variant='contained' onClick={handleRemoveFromWatchlist} style={{ marginRight: "5px", background: '#F9BB01', color: 'black' }}>
+          <Button variant='contained' onClick={handleRemoveFromWatchlist} style={{ marginRight: "5px", background: '#F9BB01', color: 'darkslategrey' }}>
             <BookmarkRemoveIcon style={{ marginRight: "5px" }} />Remove
           </Button>
           {isWatched ? (

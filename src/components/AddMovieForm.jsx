@@ -33,12 +33,11 @@ export default function AddMovieForm(props) {
   return (
     <React.Fragment>
       <Button
-        variant="outlined"
+        variant="contained"
         size="small"
         color='primary'
         onClick={handleClickOpen}
-        // style={{ color: "black", border: `1px solid black`, background:'whitesmoke' }}
-        style={{background : '#ffffff63'}}
+        style={{fontWeight:600, height:'40px',marginTop: '3px'}}
       >
         Add New Movie
       </Button>

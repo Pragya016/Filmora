@@ -4,7 +4,7 @@
 }
 
 #title {
-
+    color: darkslategray;
 }
 #genre {
     color: grey;
@@ -33,20 +33,23 @@
 }
 #plot {
     text-align: justify;
-}
-
-.btn {
-    float: inline-end;
-    margin-top: 10px !important;
+    color: grey;
 }
 
 #addedBtn {
     background-color: #F9BB01;
-    color: black;
+    color: darkslategray;
     border-color:#F9BB01 ;
 }
 
 .headings {
     font-weight: 600;
     color: #706f6f;
+}
+
+#btnContainer {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }

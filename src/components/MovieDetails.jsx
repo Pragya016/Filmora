@@ -73,7 +73,7 @@ export default function MovieDetails(props) {
               <BookmarkAddIcon /> Add to watchlist
             </Button>
           )}
-            <Button variant='contained' color='primary'><CheckIcon style={{ marginRight: "5px" }} />Watched</Button> :
+            {watchedMovie.watched && <Button variant='contained' color='primary'><CheckIcon style={{ marginRight: "5px" }} />Watched</Button>}
         </div>
         <Button variant='outlined' color='primary' onClick={() => props.onClose()}>Close</Button>
       </div>

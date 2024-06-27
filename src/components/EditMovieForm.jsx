@@ -7,7 +7,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useDispatch } from 'react-redux';
-import { addToWatchlist } from '../store/firebase.services';
+import { editMovie } from '../store/firebase.services';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 
@@ -18,14 +18,32 @@ const formatDate = (dateString) => {
 };
 
 export default function EditMovieForm(props) {
-    const [movieData, setMovieData] = React.useState({});
-    const date = movieData?.Released && formatDate(movieData.Released);
-    const [open, setOpen] = React.useState(false);
-    const dispatch = useDispatch();
+  const [movieData, setMovieData] = React.useState({
+    id: '',
+    Title: '',
+    Plot: '',
+    Released: '',
+    Genre: '',
+    Poster: ''
+  });
+  const date = movieData?.Released && formatDate(movieData.Released);
+  const [open, setOpen] = React.useState(false);
+  const dispatch = useDispatch();
 
   React.useEffect(() => {
-    setMovieData(props.movieData)
-  }, [props])
+    if (props.movieData) {
+      const movie = props.movieData;
+      setMovieData({
+        id: movie.id,
+        Title: movie.Title,
+        Plot: movie.Plot,
+        Released: formatDate(movie.Released),
+        Genre: movie.Genre,
+        Poster: movie.Poster
+      });
+    }
+
+  }, [props.movieData]);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -35,24 +53,34 @@ export default function EditMovieForm(props) {
     setOpen(false);
   };
 
-  const handleAddMovie = (event) => {
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setMovieData((prevData) => ({
+      ...prevData,
+      [name]: value
+    }));
+  };
+
+  const handleEditMovie = (event) => {
     event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    const formJson = Object.fromEntries(formData.entries());
-    dispatch(addToWatchlist(formJson));
-    console.log(formJson);
-    handleClose();
+    console.log(movieData);
+    if (movieData.id) {
+      dispatch(editMovie(movieData));
+      handleClose();
+    } else {
+      console.error('Movie ID is missing.');
+    }
   };
 
   return (
     <React.Fragment>
-        <FontAwesomeIcon icon={faEdit} onClick={handleClickOpen} />
+      <FontAwesomeIcon icon={faEdit} onClick={handleClickOpen} />
       <Dialog open={open} onClose={handleClose}>
-        <form onSubmit={handleAddMovie}>
-          <DialogTitle>Add a new movie</DialogTitle>
+        <form onSubmit={handleEditMovie}>
+          <DialogTitle>Edit Movie</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              Please enter the details of the new movie.
+              Please enter the details of the movie.
             </DialogContentText>
             <TextField
               autoFocus
@@ -62,7 +90,8 @@ export default function EditMovieForm(props) {
               name="Title"
               label="Title"
               type="text"
-              value={movieData?.Title}
+              value={movieData.Title}
+              onChange={handleChange}
               fullWidth
               variant="standard"
               aria-required="true"
@@ -70,11 +99,12 @@ export default function EditMovieForm(props) {
             <TextField
               required
               margin="dense"
-              id="Description"
-              name="Description"
-              label="Description"
+              id="Plot"
+              name="Plot"
+              label="Plot"
               type="text"
-              value={movieData?.Plot}
+              value={movieData.Plot}
+              onChange={handleChange}
               fullWidth
               variant="standard"
             />
@@ -85,7 +115,8 @@ export default function EditMovieForm(props) {
               name="Genre"
               label="Genre"
               type="text"
-              value={movieData?.Genre}
+              value={movieData.Genre}
+              onChange={handleChange}
               fullWidth
               variant="standard"
             />
@@ -96,6 +127,7 @@ export default function EditMovieForm(props) {
               name="Released"
               type="date"
               value={date}
+              onChange={handleChange}
               fullWidth
               variant="standard"
             />
@@ -106,7 +138,8 @@ export default function EditMovieForm(props) {
               name="Poster"
               label="Poster URL"
               type="url"
-              value={movieData?.Poster}
+              value={movieData.Poster}
+              onChange={handleChange}
               fullWidth
               variant="standard"
             />

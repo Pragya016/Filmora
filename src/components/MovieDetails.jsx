@@ -4,6 +4,7 @@ import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import { addToWatchlist } from '../store/firebase.services';
 import styles from './css/movie.details.module.css'
+import { Button } from '@mui/material';
 
 export default function MovieDetails(props) {
   const [movieDetails, setMovieDetails] = useState({});
@@ -49,10 +50,10 @@ export default function MovieDetails(props) {
       <p>{movieDetails.Plot}</p>
       {toggle &&
         <>
-        <button onClick={handleAddToWatchlist}><BookmarkIcon />Remove from watchlist</button>
+        <Button variant='contained' color='warning' onClick={handleAddToWatchlist}><BookmarkIcon />Remove from watchlist</Button>
         </>
       }
-        {!toggle && <button onClick={handleAddToWatchlist}><BookmarkAddIcon /> Add to watchlist</button>}
+        {!toggle && <Button variant='outlined' color='warning' onClick={handleAddToWatchlist}><BookmarkAddIcon /> Add to watchlist</Button>}
         </div>
   )
 }

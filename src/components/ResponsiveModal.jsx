@@ -2,15 +2,14 @@ import * as React from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import MovieDetails from './MovieDetails';
 
 export default function ResponsiveModal(props) {
-    const [open, setOpen] = React.useState(false);
-    const theme = useTheme();
-    const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const [open, setOpen] = React.useState(false);
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -22,7 +21,7 @@ export default function ResponsiveModal(props) {
 
   return (
     <React.Fragment>
-      <Button variant="contained" color='warning' onClick={handleClickOpen} id={props.btnStyle}>
+      <Button variant="contained" color="warning" onClick={handleClickOpen} id={props.btnStyle}>
         See Info
       </Button>
       <Dialog
@@ -32,9 +31,8 @@ export default function ResponsiveModal(props) {
         aria-labelledby="responsive-dialog-title"
       >
         <DialogContent>
-          <DialogContentText>
-              <MovieDetails movie={props.movie}/>
-          </DialogContentText>
+          {/* Remove DialogContentText and place MovieDetails directly inside DialogContent */}
+          <MovieDetails movie={props.movie} />
         </DialogContent>
       </Dialog>
     </React.Fragment>

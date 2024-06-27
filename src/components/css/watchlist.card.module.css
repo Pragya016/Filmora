@@ -3,7 +3,7 @@
     align-items: center;
     justify-content: space-between;
     overflow: hidden;
-    height: 250px;
+    height: 200px;
     width: 95%;
     padding: 10px;
     border-bottom: 1px solid lightgrey;
@@ -27,6 +27,7 @@
     display: flex;
     justify-content: space-between ;
     box-sizing: border-box;
+    height: 80px;
 }
 
 #editIcon{
@@ -35,13 +36,16 @@
     padding:0 ;
 }
 
+#bottomContainer {
+    margin-top: 13px;
+}
+
 #title, #genre, #released {
     margin: 0 0 5px 0;
 }
 
 #title {
     font-weight: 700;
-    font-size: 1.2rem;
 }
 
 #genre {
@@ -57,4 +61,11 @@
 #desc {
     color: grey;
     text-align: justify;
+    height: 70px;
+    margin: 0;
+    overflow: scroll;
+}
+
+#text {
+    margin: 0;
 }

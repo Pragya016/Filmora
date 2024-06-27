@@ -3,13 +3,14 @@ import { movies } from '../movies'
 import MovieCard from './MovieCard'
 import MovieDetails from './MovieDetails';
 import styles from './css/movieList.module.css'
-import { useDispatch} from 'react-redux';
+import { useDispatch, useSelector} from 'react-redux';
 import { getMovies } from '../store/firebase.services';
 
 export default function MovieList() {
     const [displayMovieDetails, setDisplayMovieDetails] = useState(false);
     const [title, setTitle] = useState('');
     const dispatch = useDispatch();
+    const watchlistMovies = useSelector(state => state.movies);
 
   useEffect(() => {
     // this will display the badge over the bookmarks icon

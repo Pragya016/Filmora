@@ -5,7 +5,7 @@ import { getMovies } from '../store/firebase.services';
 import styles from './css/watchlist.module.css';
 import { watchlistContext } from '../App';
 
-export default function Watchlist(props) {
+export default function Watchlist() {
   const bookmarkItems = useSelector((state) => state.movies);
   const { setShowWatchlist } = useContext(watchlistContext);
   const dispatch = useDispatch();
@@ -14,7 +14,6 @@ export default function Watchlist(props) {
     dispatch(getMovies());
     
     document.body.style.overflow = 'hidden';
-
     return () => {
       document.body.style.overflow = 'auto';
     };
@@ -27,7 +26,7 @@ export default function Watchlist(props) {
   return (
     <div id={styles.backdropContainer} onClick={() => setShowWatchlist(false)}>
       <div id={styles.container} onClick={stopPropagation}>
-        {bookmarkItems.map((item, i) => (
+        {bookmarkItems && bookmarkItems.length > 0 && bookmarkItems.map((item, i) => (
           <WatchlistCard key={i} watchlistItem={item} />
         ))}
         {bookmarkItems.length <= 0 && <h2 id={styles.warning}>No items found in the watchlist!</h2>}

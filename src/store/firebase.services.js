@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { collection, deleteDoc, doc, getDoc, getDocs, setDoc, updateDoc } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, setDoc, updateDoc } from "firebase/firestore";
 import { db } from "../config/firebase.config";
 
 // Create movies collection reference using the imported db instance
@@ -9,19 +9,18 @@ export const addToWatchlist = createAsyncThunk(
     'movies/addToWatchlist',
     async (movie, thunkAPI) => {
         try {
-            // Check if a movie with the same title already exists
-            const movieRef = doc(moviesCollection, movie.Title);
-            const docSnapshot = await getDoc(movieRef);
+            const moviesCollection = collection(db, 'movies');
+            const querySnapshot = await getDocs(moviesCollection);
 
-            if (docSnapshot.exists()) {
-                console.log('Movie with title already exists in the database.');
-                // If exists, return without adding
-                return movie;
-            }
+            querySnapshot.forEach((doc) => {
+                if (doc.data().id === movie.id) {
+                    console.log('Movie with title already exists in the database:', doc.id);
+                    return movie;
+                }
+            });
 
-            // If the movie doesn't exist, add it to the database
-            await setDoc(movieRef, movie);
-            return movie ;
+            await addDoc(moviesCollection, movie);
+            return movie;
         } catch (error) {
             console.error('Error adding movie to watchlist', error);
             return thunkAPI.rejectWithValue(error.message);
@@ -31,10 +30,7 @@ export const addToWatchlist = createAsyncThunk(
 
 export const getMovies = createAsyncThunk('movies/getMovies', async (_, thunkAPI) => {
     try {
-        // Fetch all documents from the 'movies' collection
         const querySnapshot = await getDocs(moviesCollection);
-
-        // Extract data from each document
         const movies = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
         return movies;
@@ -54,18 +50,6 @@ export const removeFromWatchlist = createAsyncThunk('movies/removeFromWatchlist'
     }
 });
 
-export const updateMovieDetails = createAsyncThunk('movies/updateMovieDetails', async ({data}, thunkAPI) => {
-    const { id, ...movieDetails } = data;
-    try {
-        const docRef = doc(moviesCollection, id);
-        await updateDoc(docRef, movieDetails);
-        return { id, movieDetails };
-    } catch (error) {
-        return thunkAPI.rejectWithValue({ error: error.message });
-    }
-});
-
-
 export const getMovieByName = createAsyncThunk('movies/getMovieByName', async (title, thunkAPI) => {
     const OMDB_API_KEY = '480fd1e0';
     const OMDB_API_URL = 'http://www.omdbapi.com/';
@@ -79,11 +63,12 @@ export const getMovieByName = createAsyncThunk('movies/getMovieByName', async (t
             console.log(movie);
             return movie;
         } else {
-            // Movie not found in Firestore, fetch from OMDB API
             const response = await fetch(`${OMDB_API_URL}?apikey=${OMDB_API_KEY}&t=${title}`);
+
             if (!response.ok) {
-                throw new Error('Failed to fetch from OMDB API');
+                console.log('Failed to fetch from OMDB API');
             }
+
             const movie = await response.json();
 
             if (movie.Response === 'False') {
@@ -97,3 +82,56 @@ export const getMovieByName = createAsyncThunk('movies/getMovieByName', async (t
         return thunkAPI.rejectWithValue({ error: error.message });
     }
 });
+
+export const editMovie = createAsyncThunk('movies/editMovie', async (movie, thunkAPI) => {
+    try {
+        if (!movie.id) {
+            console.log('Movie ID is missing.');
+        }
+
+        const formattedReleasedDate = new Date(movie.Released).toISOString().split('T')[0];
+        const movieRef = doc(db, 'movies', movie.id);
+
+        await updateDoc(movieRef, {
+            Title: movie.Title,
+            Plot: movie.Plot,
+            Genre: movie.Genre,
+            Released: formattedReleasedDate,
+            Poster: movie.Poster,
+        });
+
+        return movie;
+    } catch (error) {
+        console.error("Error updating movie:", error);
+        return thunkAPI.rejectWithValue({ error: error.message });
+    }
+});
+
+export const toggleMarkAsWatched = createAsyncThunk(
+    'movies/toggleMarkAsWatched',
+    async (id, thunkAPI) => {
+        try {
+            const docRef = doc(db, 'movies', id);
+            const docSnapshot = await getDoc(docRef);
+
+            if (docSnapshot.exists()) {
+                // Document exists, toggle or add isFavorite field
+                const movieData = docSnapshot.data();
+                const updatedData = {
+                    ...movieData,
+                    isWatched: !movieData.isWatched || false, // Toggle if exists or set to false if not
+                };
+
+                await setDoc(docRef, updatedData, { merge: true });
+            } else {
+                // Document does not exist
+                console.log('Document does not exist');
+            }
+        } catch (error) {
+            console.error('Error toggling favorite status:', error);
+            return thunkAPI.rejectWithValue(error.message);
+        }
+
+        return id; // Return the id after successful operation
+    }
+);

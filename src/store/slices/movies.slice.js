@@ -37,8 +37,10 @@ const watchlistSlice = createSlice({
         });
 
         builder.addCase(toggleMarkAsWatched.fulfilled, (state, action) => {
-            return action.payload;
-        })
+            return state.map(movie =>
+                movie.id === action.payload.id ? { ...movie, isWatched: action.payload.updatedData.isWatched } : movie
+            );
+        });
     }
 })
 

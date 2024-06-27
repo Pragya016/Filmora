@@ -29,7 +29,7 @@ export default function Watchlist() {
         {bookmarkItems && bookmarkItems.length > 0 && bookmarkItems.map((item, i) => (
           <WatchlistCard key={i} watchlistItem={item} />
         ))}
-        {bookmarkItems.length <= 0 && <h2 id={styles.warning}>No items found in the watchlist!</h2>}
+        {bookmarkItems.length <= 0 && <h2 id={styles.warning}>No item found in the watchlist.</h2>}
       </div>
     </div>
   );

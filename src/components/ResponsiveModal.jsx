@@ -22,7 +22,7 @@ export default function ResponsiveModal(props) {
   return (
     <React.Fragment>
       <Button variant="contained" style={{background:'#F9BB02', color : 'black', fontWeight : 600}} onClick={handleClickOpen} id={props.btnStyle}>
-        See Info
+        More Details
       </Button>
       <Dialog
         fullScreen={fullScreen}

@@ -107,6 +107,8 @@ export const editMovie = createAsyncThunk('movies/editMovie', async (movie, thun
     }
 });
 
+
+
 export const toggleMarkAsWatched = createAsyncThunk(
     'movies/toggleMarkAsWatched',
     async (id, thunkAPI) => {
@@ -115,7 +117,6 @@ export const toggleMarkAsWatched = createAsyncThunk(
             const docSnapshot = await getDoc(docRef);
 
             if (docSnapshot.exists()) {
-                // Document exists, toggle or add isFavorite field
                 const movieData = docSnapshot.data();
                 const updatedData = {
                     ...movieData,
@@ -123,15 +124,13 @@ export const toggleMarkAsWatched = createAsyncThunk(
                 };
 
                 await setDoc(docRef, updatedData, { merge: true });
+                return { id, updatedData }; // Return the id and updated data
             } else {
-                // Document does not exist
                 console.log('Document does not exist');
             }
         } catch (error) {
-            console.error('Error toggling favorite status:', error);
+            console.error('Error toggling watched status:', error);
             return thunkAPI.rejectWithValue(error.message);
         }
-
-        return id; // Return the id after successful operation
     }
 );

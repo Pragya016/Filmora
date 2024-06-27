@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import BookmarkRemoveIcon from '@mui/icons-material/BookmarkRemove';
 import IconButton from '@mui/material/IconButton';
@@ -11,14 +11,14 @@ import EditMovieForm from './EditMovieForm';
 
 export default function WatchlistCard(props) {
   const { Poster, Title, Released, id, Plot, Genre, isWatched } = props.watchlistItem;
-  let { inWatchlist } = props.watchlistItem;
+  // let { inWatchlist } = props.watchlistItem;
   const dispatch = useDispatch();
   console.log(isWatched)
 
   function handleRemoveFromWatchlist() {
     const confirmation = window.confirm('Delete this movie from watchlist?');
     if (!confirmation) return;
-    inWatchlist = false;
+    // inWatchlist = false;
     dispatch(removeFromWatchlist(id));
   }
 

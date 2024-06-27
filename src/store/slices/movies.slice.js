@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { addToWatchlist, editMovie, getMovieByName, getMovies, removeFromWatchlist, toggleMarkAsWatched, updateMovieDetails } from "../firebase.services";
+import { addToWatchlist, editMovie, getMovieByName, getMovies, removeFromWatchlist, toggleMarkAsWatched } from "../firebase.services";
 
 const watchlistSlice = createSlice({
     name: 'movie',

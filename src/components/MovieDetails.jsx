@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
-import BookmarkIcon from '@mui/icons-material/Bookmark';
+import LibraryAddCheckIcon from '@mui/icons-material/LibraryAddCheck';
 import { addToWatchlist } from '../store/firebase.services';
 import styles from './css/movie.details.module.css'
 import { Button } from '@mui/material';
@@ -41,19 +41,20 @@ export default function MovieDetails(props) {
   return (
       <div id={styles.container}>
       <img src={movieDetails.Poster} alt="movie-poster" id={styles.poster} />
-      <h3>{movieDetails.Title}</h3>
-      <p>{movieDetails.Genre }</p>
-      <p>{movieDetails.Runtime }</p>
-      <p>{movieDetails.Released }</p>
-      <p>{movieDetails.Director }</p>
-      <p>{movieDetails.Language}</p>
-      <p>{movieDetails.Plot}</p>
+      <h1 id={styles.title}>{movieDetails.Title}</h1>
+      <p id={styles.genre}><span className={styles.headings}>Genre</span> : {movieDetails.Genre }</p>
+      <p id={styles.runtime}><span className={styles.headings}>Duration</span> : {movieDetails.Runtime }</p>
+      <p id={styles.released}><span className={styles.headings}>Released on</span> : {movieDetails.Released }</p>
+      <p id={styles.director}><span className={styles.headings}>Director</span> : {movieDetails.Director }</p>
+      <p id={styles.language}><span className={styles.headings}>Language</span> : {movieDetails.Language}</p>
+      <p id={styles.plot}>{movieDetails.Plot}</p>
+      <Button className={styles.btn} variant='outlined' color='primary' style={{ marginLeft:'5px'}} onClick={() => props.onClose()}>Close</Button>
       {toggle &&
         <>
-        <Button variant='contained' color='warning' onClick={handleAddToWatchlist}><BookmarkIcon />Remove from watchlist</Button>
+        <Button id={styles.addedBtn} className={styles.btn} variant='contained' color='warning' onClick={handleAddToWatchlist}><LibraryAddCheckIcon style={{marginRight : '5px'}} />added</Button>
         </>
       }
-        {!toggle && <Button variant='outlined' color='warning' onClick={handleAddToWatchlist}><BookmarkAddIcon /> Add to watchlist</Button>}
+        {!toggle && <Button className={styles.btn} variant='outlined' color='warning' onClick={handleAddToWatchlist}><BookmarkAddIcon /> Add to watchlist</Button>}
         </div>
   )
 }

@@ -1,5 +1,5 @@
 #backdropContainer {
-    background-color: #00000085;
+    background-color: rgba(0, 0, 0, 50%);
     position: fixed;
     z-index: 1;
     height: 100vh;
@@ -12,21 +12,20 @@
 
 #container {
     background-color: white;
-    /* display: flex;
-    flex-direction: column;
-    align-items: center; */
     height: auto;
     min-height:200px;
     max-height: 550px;
-    width: 600px;
+    width: 700px;
     overflow: scroll;
+    scrollbar-width: thin;
     border-radius: 5px;
+    padding-left: 13px;
     box-shadow: 0 0 15px grey;
 }
 
 #warning {
     position: relative;
-    top: 40%;
+    top: 60px;
     text-align: center;
-    vertical-align: middle;
+    color: grey;
 }

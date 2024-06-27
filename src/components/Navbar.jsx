@@ -1,11 +1,10 @@
 import React, { useContext } from 'react';
-import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
+import LiveTvIcon from '@mui/icons-material/LiveTv';
 import Typography from '@mui/material/Typography';
-import InputBase from '@mui/material/InputBase';
 import Badge from '@mui/material/Badge';
 import BookmarksIcon from '@mui/icons-material/Bookmarks';
 import { useSelector } from 'react-redux';
@@ -31,13 +30,15 @@ export default function Navbar() {
             component="div"
             sx={{ display: { xs: 'none', sm: 'block' } }}
           >
-            Filmora
+            <span id={styles.logoText}>
+             <LiveTvIcon style={{position :'relative', top : '2px'}}/> Filmora
+            </span>
           </Typography>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
             <AddMovieForm />
-            <IconButton size="large" aria-label="show 4 new mails" color="inherit" onClick={handleDisplayWatchlist}>
-              <Badge badgeContent={watchlistItems.length} color="error">
+            <IconButton size="large" color="inherit" onClick={handleDisplayWatchlist}>
+              <Badge badgeContent={watchlistItems.length} color="primary">
                 <BookmarksIcon />
               </Badge>
             </IconButton>

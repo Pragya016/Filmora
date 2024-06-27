@@ -35,8 +35,10 @@ export default function AddMovieForm(props) {
       <Button
         variant="outlined"
         size="small"
+        color='primary'
         onClick={handleClickOpen}
-        style={{ color: "white", border: `1px solid white` }}
+        // style={{ color: "black", border: `1px solid black`, background:'whitesmoke' }}
+        style={{background : '#ffffff63'}}
       >
         Add New Movie
       </Button>

@@ -12,7 +12,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 
 const formatDate = (dateString) => {
+  if (!dateString) {
+    return ''; // Handle empty or null case as needed
+  }
+
   const date = new Date(dateString);
+  if (isNaN(date.getTime())) {
+    throw new Error('Invalid date'); // Handle invalid date string
+  }
+
   const isoDateString = date.toISOString().split('T')[0];
   return isoDateString;
 };

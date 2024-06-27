@@ -1,12 +1,12 @@
 #cardContainer {
-    height: 220px;
+    height: 235px;
     width: 250px;
-    background-color: #545353;
     overflow: hidden;
     margin: 10px;
     padding: 10px;
     border-radius: 10px;
-    color: lightgrey;
+    background-color: white;
+    box-shadow: 0 0 15px lightgrey;
 }
 
 #poster {
@@ -26,6 +26,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    height: 35px;
 }
 
 #title {
@@ -36,8 +37,9 @@
 }
 
 #duration {
-    font-size: 1rem;
+    font-size: 0.8rem;
     margin: 0;
+    color: grey;
 }
 
 #btn {

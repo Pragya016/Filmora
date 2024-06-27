@@ -21,7 +21,7 @@ export default function ResponsiveModal(props) {
 
   return (
     <React.Fragment>
-      <Button variant="contained" color="warning" onClick={handleClickOpen} id={props.btnStyle}>
+      <Button variant="contained" style={{background:'#F9BB02', color : 'black', fontWeight : 600}} onClick={handleClickOpen} id={props.btnStyle}>
         See Info
       </Button>
       <Dialog
@@ -31,8 +31,7 @@ export default function ResponsiveModal(props) {
         aria-labelledby="responsive-dialog-title"
       >
         <DialogContent>
-          {/* Remove DialogContentText and place MovieDetails directly inside DialogContent */}
-          <MovieDetails movie={props.movie} />
+          <MovieDetails movie={props.movie} onClose={ handleClose} />
         </DialogContent>
       </Dialog>
     </React.Fragment>

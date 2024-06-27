@@ -8,8 +8,11 @@ const watchlistSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(addToWatchlist.fulfilled, (state, action) => {
             const existingIndex = state.findIndex(movie => movie.id === action.payload.id);
+            console.log(existingIndex)
             if (existingIndex === -1) {
                 return [...state, action.payload];
+            } else {
+                return state
             }
         });
 
@@ -27,6 +30,7 @@ const watchlistSlice = createSlice({
 
         builder.addCase(editMovie.fulfilled, (state, action) => {
             const updatedMovie = action.payload;
+            console.log(updatedMovie)
             return state.map((movie) =>
                 movie.id === updatedMovie.id ? { ...movie, ...updatedMovie } : movie
             );

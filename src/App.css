@@ -1,5 +1,15 @@
 html, body {
-  background-color: #282c34;
+  /* background-color: #282c34; */
+  background: url('https://static.vecteezy.com/system/resources/thumbnails/042/343/596/small/abstract-colorful-creative-business-flowing-wave-background-vector.jpg') no-repeat;
+  background-size: cover;
+}
+
+::-webkit-scrollbar {
+  visibility: hidden;
+}
+
+#root {
+  overflow: hidden;
 }
 
 #App {

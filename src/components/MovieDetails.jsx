@@ -28,6 +28,7 @@ export default function MovieDetails(props) {
         const movieId = movieInWatchlist ? movieInWatchlist.id : null;
         setIsInWatchlist(!!movieInWatchlist);
         setWatchedMovie({ watched: !!movieInWatchlist, id: movieId });
+        console.log(watchedMovie.watched)
       } catch (error) {
         console.error(error);
       }
@@ -65,15 +66,15 @@ export default function MovieDetails(props) {
       <div id={styles.btnContainer}>
         <div>
           {isInWatchlist ? (
-            <Button variant='contained' color='warning' style={{ marginRight: '5px' }}>
+            <Button variant='contained' color='warning' style={{ marginRight: '5px' , float : 'right'}}>
               <LibraryAddCheckIcon style={{ marginRight: '5px' }} />Added
             </Button>
           ) : (
-            <Button variant='outlined' color='warning' onClick={handleAddToWatchlist} style={{ marginRight: '5px' }}>
+            <Button variant='outlined' color='warning' onClick={handleAddToWatchlist} style={{ marginRight: '5px', float : 'right'}}>
               <BookmarkAddIcon /> Add to watchlist
             </Button>
           )}
-            {watchedMovie.watched && <Button variant='contained' color='primary'><CheckIcon style={{ marginRight: "5px" }} />Watched</Button>}
+            {/* {watchedMovie.watched && <Button variant='contained' color='primary'><CheckIcon style={{ marginRight: "5px" }} />Watched</Button>} */}
         </div>
         <Button variant='outlined' color='primary' onClick={() => props.onClose()}>Close</Button>
       </div>

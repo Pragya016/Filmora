@@ -10,13 +10,14 @@ import { Button } from '@mui/material';
 import EditMovieForm from './EditMovieForm';
 
 export default function WatchlistCard(props) {
-  const { Poster, Title, Released, id, Plot, Genre, isWatched } = props.watchlistItem;
+  const { Poster, Title, Released, id, Plot, Genre, isWatched, inWatchlist } = props.watchlistItem;
   const dispatch = useDispatch();
 
   function handleRemoveFromWatchlist() {
     const confirmation = window.confirm('Delete this movie from watchlist?');
     if (!confirmation) return;
-    dispatch(removeFromWatchlist(id));
+
+    dispatch(removeFromWatchlist({id}));
   }
 
   function handleMarkedAsWatched() {

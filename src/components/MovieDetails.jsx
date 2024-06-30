@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 import LibraryAddCheckIcon from '@mui/icons-material/LibraryAddCheck';
-import { addToWatchlist, toggleMarkAsWatched } from '../store/firebase.services';
-import CheckIcon from '@mui/icons-material/Check';
+import { addToWatchlist} from '../store/firebase.services';
 import { Button } from '@mui/material';
 import styles from './css/movie.details.module.css';
 
@@ -28,6 +27,7 @@ export default function MovieDetails(props) {
         const movieId = movieInWatchlist ? movieInWatchlist.id : null;
         setIsInWatchlist(!!movieInWatchlist);
         setWatchedMovie({ watched: !!movieInWatchlist, id: movieId });
+        console.log(watchedMovie)
       } catch (error) {
         console.error(error);
       }

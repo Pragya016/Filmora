@@ -26,7 +26,6 @@ export default function AddMovieForm(props) {
     const formData = new FormData(event.currentTarget);
     const formJson = Object.fromEntries(formData.entries());
     dispatch(addToWatchlist(formJson));
-    console.log(formJson);
     handleClose();
   };
 

@@ -14,7 +14,6 @@ export const addToWatchlist = createAsyncThunk(
 
             querySnapshot.forEach((doc) => {
                 if (doc.data().id === movie.id) {
-                    console.log('Movie with title already exists in the database:', doc.id);
                     return movie;
                 }
             });
@@ -22,7 +21,6 @@ export const addToWatchlist = createAsyncThunk(
             await addDoc(moviesCollection, movie);
             return movie;
         } catch (error) {
-            console.error('Error adding movie to watchlist', error);
             return thunkAPI.rejectWithValue(error.message);
         }
     }
@@ -35,17 +33,17 @@ export const getMovies = createAsyncThunk('movies/getMovies', async (_, thunkAPI
 
         return movies;
     } catch (error) {
-        console.log('Something went wrong:', error);
         return thunkAPI.rejectWithValue(error.message);
     }
 });
 
-export const removeFromWatchlist = createAsyncThunk('movies/removeFromWatchlist', async (id, thunkAPI) => {
+export const removeFromWatchlist = createAsyncThunk('movies/removeFromWatchlist', async ({id}, thunkAPI) => {
     try {
         const docRef = doc(moviesCollection, id);
         await deleteDoc(docRef);
         return id;
     } catch (error) {
+        console.log(error)
         return thunkAPI.rejectWithValue({ error: error.message });
     }
 });

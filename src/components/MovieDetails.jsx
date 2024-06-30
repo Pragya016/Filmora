@@ -28,7 +28,6 @@ export default function MovieDetails(props) {
         const movieId = movieInWatchlist ? movieInWatchlist.id : null;
         setIsInWatchlist(!!movieInWatchlist);
         setWatchedMovie({ watched: !!movieInWatchlist, id: movieId });
-        console.log(watchedMovie.watched)
       } catch (error) {
         console.error(error);
       }
@@ -46,13 +45,6 @@ export default function MovieDetails(props) {
     setIsInWatchlist(true);
   }
 
-  // ---------------------------------
-  // function handleMarkedAsWatched() {
-  //   dispatch(toggleMarkAsWatched(watchedMovie.id));
-  //   setWatchedMovie(prevState => ({watched : !prevState, id : prevState}))
-  //   console.log(watchedMovie.watched)
-  // }
-
   return (
     <div id={styles.container}>
       <img src={movieDetails.Poster} alt="movie-poster" id={styles.poster} />
@@ -66,11 +58,11 @@ export default function MovieDetails(props) {
       <div id={styles.btnContainer}>
         <div>
           {isInWatchlist ? (
-            <Button variant='contained' color='warning' style={{ marginRight: '5px' , float : 'right'}}>
+            <Button variant='contained' color='warning' style={{ marginRight: '5px', float : 'right', color : 'darkslategray', background: '#F9BB02' ,border: '1px solid #F9BB02'}}>
               <LibraryAddCheckIcon style={{ marginRight: '5px' }} />Added
             </Button>
           ) : (
-            <Button variant='outlined' color='warning' onClick={handleAddToWatchlist} style={{ marginRight: '5px', float : 'right'}}>
+            <Button variant='outlined' onClick={handleAddToWatchlist} style={{ marginRight: '5px', float : 'right', color : '#F9BB02', border: '1px solid #F9BB02'}}>
               <BookmarkAddIcon /> Add to watchlist
             </Button>
           )}

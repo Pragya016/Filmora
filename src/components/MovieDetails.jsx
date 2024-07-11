@@ -2,14 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 import LibraryAddCheckIcon from '@mui/icons-material/LibraryAddCheck';
-import { addToWatchlist} from '../store/firebase.services';
+import { addToWatchlist } from '../store/firebase.services';
+import Loader from './Loader.jsx';
 import { Button } from '@mui/material';
 import styles from './css/movie.details.module.css';
 
 export default function MovieDetails(props) {
-  const [movieDetails, setMovieDetails] = useState({});
+  const [movieDetails, setMovieDetails] = useState(null);
   const [isInWatchlist, setIsInWatchlist] = useState(false);
   const [watchedMovie, setWatchedMovie] = useState({ watched: false, id: null });
+  const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   const watchlist = useSelector(state => state.movies || []);
 
@@ -27,15 +29,15 @@ export default function MovieDetails(props) {
         const movieId = movieInWatchlist ? movieInWatchlist.id : null;
         setIsInWatchlist(!!movieInWatchlist);
         setWatchedMovie({ watched: !!movieInWatchlist, id: movieId });
-        console.log(watchedMovie)
       } catch (error) {
         console.error(error);
+      } finally {
+        setLoading(false);
       }
     };
     fetchData();
   }, [props.movie, watchlist]);
 
-  // -------------------------------
   function handleAddToWatchlist() {
     if (isInWatchlist) return;
     const movieObj = { ...movieDetails, inWatchlist: true };
@@ -45,8 +47,10 @@ export default function MovieDetails(props) {
     setIsInWatchlist(true);
   }
 
+  if (loading) return <Loader />;
+
   return (
-    <div id={styles.container}>
+    <div>
       <img src={movieDetails.Poster} alt="movie-poster" id={styles.poster} />
       <h1 id={styles.title}>{movieDetails.Title}</h1>
       <p id={styles.genre}><span className={styles.headings}>Genre</span> : {movieDetails.Genre}</p>
@@ -58,17 +62,24 @@ export default function MovieDetails(props) {
       <div id={styles.btnContainer}>
         <div>
           {isInWatchlist ? (
-            <Button variant='contained' color='warning' style={{ marginRight: '5px', float : 'right', color : 'darkslategray', background: '#F9BB02' ,border: '1px solid #F9BB02'}}>
+            <Button
+              variant="contained"
+              color="warning"
+              style={{ marginRight: '5px', float: 'right', color: 'darkslategray', background: '#F9BB02', border: '1px solid #F9BB02' }}
+            >
               <LibraryAddCheckIcon style={{ marginRight: '5px' }} />Added
             </Button>
           ) : (
-            <Button variant='outlined' onClick={handleAddToWatchlist} style={{ marginRight: '5px', float : 'right', color : '#F9BB02', border: '1px solid #F9BB02'}}>
+            <Button
+              variant="outlined"
+              onClick={handleAddToWatchlist}
+              style={{ marginRight: '5px', float: 'right', color: '#F9BB02', border: '1px solid #F9BB02' }}
+            >
               <BookmarkAddIcon /> Add to watchlist
             </Button>
           )}
-            {/* {watchedMovie.watched && <Button variant='contained' color='primary'><CheckIcon style={{ marginRight: "5px" }} />Watched</Button>} */}
         </div>
-        <Button variant='outlined' color='primary' onClick={() => props.onClose()}>Close</Button>
+        <Button variant="outlined" color="primary" onClick={() => props.onClose()}>Close</Button>
       </div>
     </div>
   );
